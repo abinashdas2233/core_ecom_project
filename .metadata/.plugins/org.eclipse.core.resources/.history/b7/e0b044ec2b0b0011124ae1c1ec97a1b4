@@ -1,0 +1,86 @@
+package com.ecom.driver;
+
+import java.util.List;
+import java.util.Scanner;
+
+import com.ecom.entity.Product;
+import com.ecom.services.ProductServices;
+
+public class MainDriver {
+
+	public static void main(String[] args) {
+
+		Scanner sc = new Scanner(System.in);
+		ProductServices ps = new ProductServices();
+
+		while (true) {
+
+			System.out.println("\n===== E-COM MENU =====");
+			System.out.println("1. Add Product");
+			System.out.println("2. Display All Products");
+			System.out.println("3. Search Product");
+			System.out.println("4. Sort By Price");
+			System.out.println("5. Exit");
+
+			int choice = sc.nextInt();
+			sc.nextLine(); // consume newline
+
+			switch (choice) {
+
+			case 1:
+				// Create object in Main
+				Product product = new Product();
+
+				System.out.println("Enter Product Name:");
+				product.setProductName(sc.nextLine());
+
+				System.out.println("Enter Product ID:");
+				product.setProductID(sc.nextInt());
+
+				System.out.println("Enter Price:");
+				product.setPrice(sc.nextInt());
+
+				System.out.println("Enter Quantity:");
+				product.setAvailableQuantity(sc.nextInt());
+				sc.nextLine();
+
+				try {
+					ps.addProduct(product);
+					System.out.println("Product Added Successfully ");
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+				break;
+
+			case 2:
+				ps.displayAllProducts();
+				break;
+
+			case 3:
+				System.out.println("Enter product name to search:");
+				String name = sc.nextLine();
+
+				try {
+					Product found = ps.searchProduct(name);
+					System.out.println(found);
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+				break;
+
+			case 4:
+				List<Product> sorted = ps.sortedByPrice();
+				sorted.forEach(System.out::println);
+				break;
+
+			case 5:
+				System.out.println("Exiting...");
+				sc.close();
+				System.exit(0);
+
+			default:
+				System.out.println("Invalid Choice");
+			}
+		}
+	}
+}

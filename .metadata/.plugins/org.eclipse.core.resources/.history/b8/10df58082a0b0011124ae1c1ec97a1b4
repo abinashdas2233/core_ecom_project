@@ -1,0 +1,53 @@
+package com.ecom.services;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.NoSuchElementException;
+
+import com.ecom.entity.Product;
+
+public class ProductServices {
+	
+	
+	ArrayList<Product> listOfProduct= new ArrayList<Product>();
+	ArrayList<Product> sortedListOfProductByPrice= new ArrayList<Product>();
+	
+	public void addProductmaptoList(HashMap<Integer,Product>product) {
+		product.entrySet().stream().map(i->listOfProduct.add(i.getValue()));
+		
+	}
+	
+	public void addProduct(Product product) throws Exception {
+		HashMap<Integer,Product>productStore=new HashMap<>();
+		if(productStore.containsKey(product.getProductID())) {
+			throw new Exception();
+		}
+		else {
+			productStore.put(product.getProductID(),product);
+			addProductmaptoList(productStore);
+		}
+	}
+	
+	public void displayAllProducts() {
+		listOfProduct.forEach(Product -> System.out.println(Product));
+	}
+	public Product searchProduct(String productName) {
+		Product result=null;
+		try {
+			result=listOfProduct.stream().filter(n-> n.getProductName().equals(productName)).findFirst().get();
+			
+		}catch(NoSuchElementException e){
+			System.out.println("Product : "+productName+"is not currently available");
+		}
+		return result;
+	}
+	
+	public List<Product> sortedByPrice(){
+		return listOfProduct.stream().sorted(Comparator.comparingInt(i-> i.getPrice())).toList();
+		
+
+
+}
+}

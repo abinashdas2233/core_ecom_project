@@ -1,0 +1,28 @@
+package com.ecom.driver;
+
+import java.util.List;
+import java.util.Scanner;
+
+import com.ecom.entity.Product;
+import com.ecom.services.ProductServices;
+
+public class MainDriver {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		Scanner sc=new Scanner(System.in);
+		System.out.println("enter productName-");
+		String productName=sc.nextLine();
+		System.out.println("enter productid-");
+		 int productID=sc.nextInt();
+		 System.out.println("enter price-");
+		 int price=sc.nextInt();
+		 System.out.println("enter quantity-");
+		int availableQuantity=sc.nextInt();
+		
+		System.out.println("name-"+productName+" id-"+productID+" price-"+price+" qty"+availableQuantity);
+
+	}
+
+}

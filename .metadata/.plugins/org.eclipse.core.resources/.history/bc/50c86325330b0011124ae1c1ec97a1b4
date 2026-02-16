@@ -1,0 +1,47 @@
+package com.ecom.services;
+
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+
+import com.ecom.entity.Product;
+
+public class ProductCart {
+	HashMap<Product, Integer>cart=new HashMap<Product, Integer>();
+	
+	
+	public void addProduct(String productName,int quantity) throws Exception {
+		
+		Product product=new ProductServices().searchProduct(productName);
+		if(product==null) {
+			throw new Exception("Product not found");
+		}
+		else {
+		
+			if(product.getAvailableQuantity()>=quantity) {
+				cart.put(product, quantity);
+			}
+			
+			
+		}
+		
+		
+	}
+	public  void remove(String productName) throws Exception {
+		Product product=new ProductServices().searchProduct(productName);
+		if(product==null) {
+			throw new Exception("Product not found");
+		}
+		else {
+			if(cart.contains(product)) {
+		cart.remove(product);
+			}
+			else {
+				throw new Exception("Product not found in cart" );
+			}
+		}
+		
+	}
+	
+
+}

@@ -1,0 +1,42 @@
+import java.util.Scanner;
+
+import com.ecom.entity.Product;
+import com.ecom.services.ProductServices;
+
+public class MainDriver {
+
+	public static void main(String[] args) {
+
+		ProductServices ps = new ProductServices();
+		Scanner sc = new Scanner(System.in);
+
+		while (true) {
+
+			Product product = new Product();  // ✅ moved inside loop
+
+			System.out.println("Enter product name:");
+			String productName = sc.nextLine();
+			product.setProductName(productName);
+
+			System.out.println("Enter product id:");
+			int productID = sc.nextInt();
+			product.setProductID(productID);
+
+			System.out.println("Enter price:");
+			int price = sc.nextInt();
+			product.setPrice(price);
+
+			System.out.println("Enter quantity:");
+			int availableQuantity = sc.nextInt();
+			product.setAvailableQuantity(availableQuantity);
+
+			sc.nextLine(); // ✅ consume leftover newline
+
+			try {
+				ps.addProduct(product);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+}

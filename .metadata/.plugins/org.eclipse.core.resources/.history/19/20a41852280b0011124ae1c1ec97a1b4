@@ -1,0 +1,24 @@
+package com.ecom.driver;
+
+import java.util.List;
+
+import com.ecom.entity.Product;
+import com.ecom.services.ProductServices;
+
+public class MainDriver {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		ProductServices service = new ProductServices();
+		//service.displayAllProducts();
+		Product p1=service.searchProduct("IPhone");
+		System.out.println(p1);
+		
+		List<Product> sortedListByPrice=service.sortedByPrice();
+		System.out.println(sortedListByPrice);
+
+
+	}
+
+}

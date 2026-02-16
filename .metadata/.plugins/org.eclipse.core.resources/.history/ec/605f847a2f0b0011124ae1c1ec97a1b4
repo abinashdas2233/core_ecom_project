@@ -1,0 +1,35 @@
+package com.ecom.services;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import com.ecom.entity.Product;
+
+public class ProductCart {
+	List<Product>cart=new LinkedList<>();
+	
+	
+	public void addProduct(String productName) throws Exception {
+		
+		Product product=new ProductServices().searchProduct(productName);
+		if(product==null) {
+			throw new Exception("Product not found");
+		}
+		else {
+		cart.add(product);
+		}
+		
+	}
+	public  void remove(String productName) throws Exception {
+		Product product=new ProductServices().searchProduct(productName);
+		if(product==null) {
+			throw new Exception("Product not found");
+		}
+		else {
+		cart.remove(product);
+		}
+		
+	}
+	
+
+}

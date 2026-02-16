@@ -1,0 +1,50 @@
+package com.ecom.services;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.NoSuchElementException;
+
+import com.ecom.entity.Product;
+
+public class ProductServices {
+	
+	
+	ArrayList<Product> listOfProduct= new ArrayList<Product>();
+	ArrayList<Product> sortedListOfProductByPrice= new ArrayList<Product>();
+	
+	public ProductServices() {
+		Product p1= new Product("IPhone", 001, 50000, 5);
+		Product p2= new Product("JBL Speaker", 002, 10000, 5);
+		Product p3= new Product("Laptop", 003, 70000, 5);
+		Product p4= new Product("Camera", 004, 150000, 5);
+		Product p5= new Product("Television", 005, 30000, 5);
+		
+		listOfProduct.add(p1);
+		listOfProduct.add(p2);
+		listOfProduct.add(p3);
+		listOfProduct.add(p4);
+		listOfProduct.add(p5);
+		
+	}
+	
+	public void displayAllProducts() {
+		listOfProduct.forEach(Product -> System.out.println(Product));
+	}
+	public Product searchProduct(String productName) {
+		Product result=null;
+		try {
+			result=listOfProduct.stream().filter(n-> n.getProductName().equals(productName)).findFirst().get();
+			
+		}catch(NoSuchElementException e){
+			System.out.println("Product : "+productName+"is not currently available");
+		}
+		return result;
+	}
+	
+	public List<Product> sortedByPrice(){
+		return listOfProduct.stream().sorted(Comparator.comparingInt(i-> i.getPrice())).toList();
+		
+
+
+}
