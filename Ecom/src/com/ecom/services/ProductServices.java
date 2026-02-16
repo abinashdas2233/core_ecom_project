@@ -4,6 +4,7 @@ import java.util.*;
 import com.ecom.entity.Product;
 
 public class ProductServices {
+	//Inventory
 
     private HashMap<Integer, Product> productStore = new HashMap<>();
 
@@ -36,5 +37,13 @@ public class ProductServices {
                 .stream()
                 .sorted(Comparator.comparingInt(Product::getPrice))
                 .toList();
+    }
+    
+    
+    
+    //helper function
+    public HashMap<Integer, Product> getAllProducts() {
+    	return productStore;
+        
     }
 }

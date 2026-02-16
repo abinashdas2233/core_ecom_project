@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.ecom.entity.Product;
+
+import com.ecom.services.CheckOutServices;
 import com.ecom.services.ProductCart;
 import com.ecom.services.ProductServices;
 
@@ -14,6 +16,7 @@ public class MainDriver {
         Scanner sc = new Scanner(System.in);
         ProductServices ps = new ProductServices();
         ProductCart cart = new ProductCart(ps);
+        CheckOutServices checkout = new CheckOutServices(cart);
 
         while (true) {
 
@@ -25,8 +28,9 @@ public class MainDriver {
             System.out.println("5. Add To Cart");
             System.out.println("6. View Cart");
             System.out.println("7. Remove From Cart");
-            System.out.println("8. total bill -");
-            System.out.println("9. Exit");
+            System.out.println("8. Total Bill");
+            System.out.println("9. Checkout");
+            System.out.println("10. Exit");
 
             int choice = sc.nextInt();
             sc.nextLine();
@@ -68,7 +72,7 @@ public class MainDriver {
                         Product found = ps.searchProduct(name);
                         System.out.println(found);
                     } catch (Exception e) {
-                        System.out.println(e.getMessage());
+                        System.out.println("Product Not found-"+e.getMessage());
                     }
                     break;
 
@@ -112,7 +116,16 @@ public class MainDriver {
                 case 8:
                     cart.totalPrice();
                     break;
+
                 case 9:
+                    try {
+                        checkout.checkout();
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+
+                case 10:
                     System.out.println("Exiting...");
                     sc.close();
                     return;

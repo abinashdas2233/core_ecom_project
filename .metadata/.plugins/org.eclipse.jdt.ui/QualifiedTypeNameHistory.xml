@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="java.util.Scanner"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="java.lang.Exception"/>
+    <fullyQualifiedTypeName name="java.util.HashMap"/>
+    <fullyQualifiedTypeName name="com.ecom.entity.Product"/>
+    <fullyQualifiedTypeName name="com.ecom.services.CheckOutServices"/>
+    <fullyQualifiedTypeName name="com.ecom.services.ProductCart"/>
+    <fullyQualifiedTypeName name="com.ecom.services.ProductServices"/>
+</qualifiedTypeNameHistroy>

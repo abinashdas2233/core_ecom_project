@@ -73,4 +73,13 @@ public class ProductCart {
     	}
     	System.out.println("Total Price="+total);
     }
+    //helper function
+    public Map<Product,Integer> getAllCartProduct(){
+    	return cart;
+    }
+    //helper function
+    public void clearCart() {
+        cart.clear();
+    }
+
 }
