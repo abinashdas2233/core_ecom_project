@@ -13,7 +13,7 @@ import com.ecom.services.ProductServices;
 
 public class MainDriver {
 
-    public static void main(String[] args) {
+    public  void UILauncher() {
 
         Scanner sc = new Scanner(System.in);
         ProductServices ps = new ProductServices();
