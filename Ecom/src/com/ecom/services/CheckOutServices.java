@@ -3,6 +3,7 @@ package com.ecom.services;
 import java.util.Map;
 
 import com.ecom.entity.Product;
+import com.ecom.exception.OutOfStockException;
 
 
 public class CheckOutServices {
@@ -13,7 +14,7 @@ public class CheckOutServices {
         this.productCart = productCart;
     }
 
-    public void checkout() throws Exception {
+    public void checkout() throws OutOfStockException {
 
         Map<Product, Integer> cartProducts = productCart.getAllCartProduct();
 
@@ -28,7 +29,7 @@ public class CheckOutServices {
             int cartQuantity = entry.getValue();
 
             if (product.getAvailableQuantity() <cartQuantity) {
-                throw new Exception(
+                throw new OutOfStockException(
                         "Insufficient stock for product: " + product.getProductName());
             }
         }

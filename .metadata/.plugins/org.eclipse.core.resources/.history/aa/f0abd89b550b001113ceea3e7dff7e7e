@@ -1,0 +1,50 @@
+package com.ecom.services;
+
+import java.util.*;
+import com.ecom.entity.Product;
+import com.ecom.exception.ProductNotExistException;
+
+public class ProductServices {
+	//Inventory
+
+    private HashMap<Integer, Product> productStore = new HashMap<>();
+
+    public void addProduct(Product product) throws Exception {
+
+        if (productStore.containsKey(product.getProductID())) {
+            throw new ProductNotExistException("Product ID already exists!");
+        }
+
+        productStore.put(product.getProductID(), product);
+    }
+
+    public void displayAllProducts() {
+        productStore.values().forEach(System.out::println);
+    }
+
+    public Product searchProduct(String productName) {
+
+        return productStore.values()
+                .stream()
+                .filter(p -> p.getProductName().equalsIgnoreCase(productName))
+                .findFirst()
+                .get()
+               ;
+    }
+
+    public List<Product> sortedByPrice() {
+
+        return productStore.values()
+                .stream()
+                .sorted(Comparator.comparingInt(Product::getPrice))
+                .toList();
+    }
+    
+    
+    
+    //helper function
+    public HashMap<Integer, Product> getAllProducts() {
+    	return productStore;
+        
+    }
+}

@@ -2,16 +2,17 @@ package com.ecom.services;
 
 import java.util.*;
 import com.ecom.entity.Product;
+import com.ecom.exception.ProductExistException;
 
 public class ProductServices {
 	//Inventory
 
     private HashMap<Integer, Product> productStore = new HashMap<>();
 
-    public void addProduct(Product product) throws Exception {
+    public void addProduct(Product product) throws ProductExistException  {
 
         if (productStore.containsKey(product.getProductID())) {
-            throw new Exception("Product ID already exists!");
+            throw new ProductExistException("Product ID already exists!");
         }
 
         productStore.put(product.getProductID(), product);

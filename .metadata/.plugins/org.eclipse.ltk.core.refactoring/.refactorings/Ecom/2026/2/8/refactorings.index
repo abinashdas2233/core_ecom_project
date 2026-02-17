@@ -1,2 +1,4 @@
 1771238706935	Rename package 'com.amazonEcom'
 1771249363389	Rename type 'CheckOut'
+1771259197061	Rename type 'ProductExistException'
+1771259774111	Rename type 'ProductNotExistException'

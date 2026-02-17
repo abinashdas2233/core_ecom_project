@@ -1,0 +1,56 @@
+package com.ecom.services;
+
+import java.util.Map;
+
+import com.ecom.entity.Product;
+
+
+public class CheckOutServices {
+
+    private ProductCart productCart;
+
+    public CheckOutServices(ProductCart productCart) {
+        this.productCart = productCart;
+    }
+
+    public void checkout() throws Exception {
+
+        Map<Product, Integer> cartProducts = productCart.getAllCartProduct();
+
+        if (cartProducts.isEmpty()) {
+            System.out.println("Cart is empty");
+            return;
+        }
+
+        for (Map.Entry<Product, Integer> entry : cartProducts.entrySet()) {
+
+            Product product = entry.getKey();
+            int cartQuantity = entry.getValue();
+
+            if (product.getAvailableQuantity() <cartQuantity) {
+                throw new Exception(
+                        "Insufficient stock for product: " + product.getProductName());
+            }
+        }
+
+        
+        
+        double total = 0;
+
+        for (Map.Entry<Product, Integer> entry : cartProducts.entrySet()) {
+
+            Product product = entry.getKey();
+            int cartQuantity = entry.getValue();
+
+            product.setAvailableQuantity(
+                    product.getAvailableQuantity() - cartQuantity);
+
+            total =total+product.getPrice() * cartQuantity;
+        }
+
+        System.out.println("Purchase Successful");
+        System.out.println("Total Bill = " + total);
+
+        productCart.clearCart();
+    }
+}

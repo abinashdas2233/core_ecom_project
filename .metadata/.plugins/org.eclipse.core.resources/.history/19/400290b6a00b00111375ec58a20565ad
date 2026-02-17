@@ -1,0 +1,143 @@
+package com.ecom.driver;
+
+import java.util.List;
+import java.util.Scanner;
+
+import com.ecom.entity.Product;
+import com.ecom.exception.ProductExistException;
+import com.ecom.exception.ProductNotFoundException;
+import com.ecom.services.CheckOutServices;
+import com.ecom.services.ProductCart;
+import com.ecom.services.ProductServices;
+
+public class MainDriver {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        ProductServices ps = new ProductServices();
+        ProductCart cart = new ProductCart(ps);
+        CheckOutServices checkout = new CheckOutServices(cart);
+
+        while (true) {
+
+            System.out.println(" E-COM MENU ");
+            System.out.println("1. Add Product");
+            System.out.println("2. Display All Products");
+            System.out.println("3. Search Product");
+            System.out.println("4. Sort By Price");
+            System.out.println("5. Add To Cart");
+            System.out.println("6. View Cart");
+            System.out.println("7. Remove From Cart");
+            System.out.println("8. Total Bill");
+            System.out.println("9. Checkout");
+            System.out.println("10. Exit");
+
+            int choice = sc.nextInt();
+            sc.nextLine();
+
+            switch (choice) {
+
+                case 1:
+                    Product product = new Product();
+
+                    System.out.println("Enter Product Name:");
+                    product.setProductName(sc.nextLine());
+
+                    System.out.println("Enter Product ID:");
+                    product.setProductID(sc.nextInt());
+
+                    System.out.println("Enter Price:");
+                    product.setPrice(sc.nextInt());
+
+                    System.out.println("Enter Quantity:");
+                    product.setAvailableQuantity(sc.nextInt());
+                    sc.nextLine();
+
+                    try {
+                        ps.addProduct(product);
+                        System.out.println("Product Added Successfully");
+                    } catch (ProductExistException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+
+                case 2:
+                    ps.displayAllProducts();
+                    break;
+
+                case 3:
+                    System.out.println("Enter product name to search:");
+                    String name = sc.nextLine();
+                    try {
+                        Product found = ps.searchProduct(name);
+                        
+                        System.out.println(found);
+                        if(found==null) {
+                        	throw new ProductNotFoundException("no product with name-"+name);
+                        }
+                    } catch (ProductNotFoundException e) {
+                        System.out.println("Product Not found-"+e.getMessage());
+                    }
+                    break;
+
+                case 4:
+                    List<Product> sorted = ps.sortedByPrice();
+                    sorted.forEach(System.out::println);
+                    break;
+
+                case 5:
+                    System.out.println("Enter product name:");
+                    String cartProductName = sc.nextLine();
+
+                    System.out.println("Enter quantity:");
+                    int quantity = sc.nextInt();
+                    sc.nextLine();
+
+                    try {
+                        cart.addProduct(cartProductName, quantity);
+                        System.out.println("Product added to cart successfully");
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+
+                case 6:
+                    cart.viewCart();
+                    break;
+
+                case 7:
+                    System.out.println("Enter product name to remove:");
+                    String removeName = sc.nextLine();
+
+                    try {
+                        cart.remove(removeName);
+                        System.out.println("Product removed from cart");
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+
+                case 8:
+                    cart.totalPrice();
+                    break;
+
+                case 9:
+                    try {
+                        checkout.checkout();
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+
+                case 10:
+                    System.out.println("Exiting...");
+                    sc.close();
+                    return;
+
+                default:
+                    System.out.println("Invalid Choice");
+            }
+        }
+    }
+}
